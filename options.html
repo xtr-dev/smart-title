@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SmartTitle Settings</title>
+    <link rel="stylesheet" href="vendor/simmerjs/dist/simmer.js">
+    <link rel="stylesheet" href="vendor/spectre/dist/spectre.css">
+    <link rel="stylesheet" href="vendor/spectre/dist/spectre-icons.min.css">
+</head>
+<body style="min-width: 400px; padding: .5rem 0">
+<div class="container">
+    <div class="columns">
+        <div class="column col-4 col-mx-auto">
+            <p class="text-center">
+                <img src="images/icon128.png" alt="SmartTitle Logo" />
+            </p>
+            <h3>SmartTitle Settings</h3>
+            <form>
+                <div class="form-group">
+                    <label class="form-label" for="page-filters">Select a filter to edit</label>
+                    <div class="input-group">
+                        <select id="page-filters" type="text" class="form-select"></select>
+                        <button id="remove-page-filter" class="input-group-btn btn btn-error">
+                            <i class="icon icon-cross"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="divider"></div>
+            <div id="options-form"></div>
+        </div>
+    </div>
+</div>
+
+<script src="form.js"></script>
+<script src="global.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

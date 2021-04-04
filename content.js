@@ -1,12 +1,19 @@
 let contextTarget = null;
 let updateInterval = -1;
 let originalTitle = '';
+let failures = 0;
 document.addEventListener('contextmenu', e => {
     contextTarget = e.target;
 }, true);
 
 const simmer = Simmer.noConflict();
 
+/**
+ * Sets the elementSelector of the current tab's settings
+ * Called when 'set new title' context menu item is clicked
+ *
+ * @return {Promise<void>}
+ */
 async function setNewTitle() {
     const targetSelector = simmer(contextTarget);
     const filter = (await matchesPageFilter() && await getMatchingPageFilter()) || escapeRegExp(window.location.href);
@@ -23,13 +30,34 @@ chrome.runtime.onMessage.addListener(
     }
 );
 
+/**
+ * Called by the setInterval timer to update the tab's title according to settings
+ *
+ * @return {Promise<void>}
+ */
 async function updateTitle() {
-    const settings = await getMatchingPageSettings();
-    const titleEl = document.querySelector(settings.elementSelector);
-    const title = titleEl ? titleEl.innerText.trim() : '! Element not found';
-    document.title = settings.format.replace('{title}', title);
+    try {
+        const settings = await getMatchingPageSettings();
+        const titleEl = document.querySelector(settings.elementSelector);
+        const title = titleEl ? titleEl.innerText.trim() : '! Element not found';
+        document.title = settings.format.replace('{title}', title);
+    }
+    catch (e) {
+        console.error(`Error while updating title (${++failures}/5)`);
+        if (failures >= 5 && updateInterval !== -1) {
+            clearInterval(updateInterval);
+            updateInterval = -1;
+            failures = 0;
+        }
+    }
 }
 
+/**
+ * Starts/stops the setInterval timer based on the passed settings
+ * @param settings the settings
+ *
+ * @return {Promise<void>}
+ */
 async function toggleTimer(settings) {
     if (updateInterval !== -1) {
         clearInterval(updateInterval);
@@ -46,6 +74,11 @@ async function toggleTimer(settings) {
     }
 }
 
+/**
+ * Reload the settings when changed
+ *
+ * @return {Promise<void>}
+ */
 async function reloadSettings() {
     if (!(await matchesPageFilter())) {
         return;
