@@ -129,6 +129,7 @@ function getPageFilters() {
  * @return {Promise<?>}
  */
 function updateFilterSettings(filter, filterSettings) {
+    console.info('updateFilterSettings');
     return getSettings()
         .then(settings => {
             if (filterSettings === null) {

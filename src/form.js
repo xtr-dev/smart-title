@@ -25,6 +25,7 @@ async function createForm(containerId, showRemoveProtectionOption = false, overr
     updateIntervalInput.addEventListener('change', saveSettings);
     titleFormatInput.addEventListener('change', saveSettings);
     titleEnabledCheck.addEventListener('change', saveSettings);
+    elementSelectorInput.addEventListener('change', saveSettings);
     removeProtectionButton.addEventListener('click', async function (e) {
         e.preventDefault();
         const tab = await getActiveTab();
@@ -42,7 +43,9 @@ async function createForm(containerId, showRemoveProtectionOption = false, overr
 
     async function reloadSettings() {
         const settings = await getSettings();
+        console.log('overrideFilter', overrideFilter);
         const filter = overrideFilter || await getMatchingPageFilter((await getActiveTab()).url);
+        console.log('filter', filter);
         const pageSettings = settings.sites[filter];
         updateIntervalInput.value = pageSettings.interval;
         titleFormatInput.value = pageSettings.format;

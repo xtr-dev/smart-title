@@ -11,46 +11,13 @@
       <div class="columns">
         <div class="column col-12">
           <h3>SmartTitle</h3>
-          <form>
-            <div class="form-group">
-              <label class="form-label" for="page-filter">Page filter (<a target="_blank" href="https://en.wikipedia.org/wiki/Regular_expression">regex</a>)</label>
-              <input id="page-filter" type="text" class="form-input">
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="element-selector">Element CSS selector</label>
-              <input id="element-selector" type="text" class="form-input">
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="title-update-interval">Update title every</label>
-              <div class="input-group">
-                <input id="title-update-interval" type="text" class="form-input" placeholder="0.5">
-                <span class="input-group-addon">seconds</span>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="title-format">Adjust title formatting</label>
-              <input id="title-format" type="text" class="form-input" placeholder="Price: {title}">
-            </div>
-
-            <div class="form-group">
-              <label class="form-switch">
-                <input id="title-enabled" type="checkbox">
-                <i class="form-icon"></i> Enable custom title
-              </label>
-            </div>
-
-            <div class="form-group">
-              <button id="remove-protection-button" class="btn btn-primary">Remove right click protection</button>
-            </div>
-          </form>
+          <div id="options-form"></div>
         </div>
       </div>
     </div>
 
     <script src="global.js"></script>
+    <script src="form.js"></script>
     <script src="popup.js"></script>
   </body>
 </html>
